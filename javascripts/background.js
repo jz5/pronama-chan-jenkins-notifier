@@ -18,13 +18,13 @@ $(function(){
 
     $.ajaxSetup({
         "error": function() {
-            $.fn.desktopNotify(
-                {
-                    picture: getIcon("FAILURE"),
-                    title: "Failed to access to Jenkins",
-                    text : apiUrl
-                }
-            );
+            var option = {
+                type: 'basic',
+                title: "Failed to access to Jenkins",
+                message: apiUrl,
+                iconUrl: getIcon("FAILURE")
+            }
+            chrome.notifications.create("", option, function (id) { /* Do nothing */ });
         }
     });
 
@@ -67,6 +67,18 @@ $(function(){
         return color;
     }
 
+    function getSound(result) {
+        var url = "sounds/success.mp3";
+        if (result == "UNSTABLE") {
+            url = "sounds/unstable.mp3";
+        } else if (result == "FAILURE") {
+            url = "sounds/failure.mp3";
+        } else if (result == "ABORTED") {
+            url = "sounds/aborted.mp3";
+        }
+        return url;
+    }
+
     // replace popup event
     chrome.browserAction.setPopup({popup : ""});
     chrome.browserAction.onClicked.addListener(function(tab) {
@@ -90,13 +102,18 @@ $(function(){
                 prevBuild = json.number;
                 chrome.browserAction.setBadgeText({text: String(json.number)});
                 chrome.browserAction.setBadgeBackgroundColor({color: getColor(json.result)});
-                $.fn.desktopNotify(
-                    {
-                        picture: getIcon(json.result),
-                        title: "#" + json.number + " (" + json.result + ")",
-                        text : json.actions[0].causes[0].shortDescription
-                    }
-                );
+
+                var option = {
+                    type: 'basic',
+                    title: "#" + json.number + " (" + json.result + ")",
+                    message: json.actions[0].causes[0].shortDescription,
+                    iconUrl: getIcon(json.result)
+                }
+                chrome.notifications.create("", option, function (id) { /* Do nothing */ });
+
+                audio = new Audio(getSound(json.result));
+                audio.autoplay = false;
+                audio.play();
             }
         });
     }
@@ -117,13 +134,13 @@ $(function(){
         });
 
         ws.bind("websocket::error", function() {
-            $.fn.desktopNotify(
-                {
-                    picture: getIcon("FAILURE"),
-                    title: "Failed to access to Jenkins Websocket Notifier. Please check your websocket URL",
-                    text : wsUrl
-                }
-            );
+            var option = {
+                type: 'basic',
+                title: "Failed to access to Jenkins Websocket Notifier. Please check your websocket URL",
+                message: wsUrl,
+                iconUrl: getIcon("FAILURE")
+            }
+            chrome.notifications.create("", option, function (id) { /* Do nothing */ });
         });
 
         // auto reconnect

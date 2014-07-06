@@ -1,33 +1,21 @@
-Jenkins Notifier for Chrome(TM)
+Pronama-chan Jenkins Notifier for Chrome(TM)
 ======================================
 A Google Chrome(TM) extension for [Jenkins](http://jenkins-ci.org/).
 
-Features
-----------------
- * Build notifications.
- * Build result icons(blue / yellow / red / grey).
+Original extension is [Jenkins Notifier for Chrome(TM)](https://github.com/mallowlabs/jenkins-notifier-for-chrome).
 
-Authors
-----------------
- * @mallowlabs
- * @mzp
+Description
+---
+[pronama.jp/](http://pronama.jp/)
 
-Requirement
-----------------
 
- * Chrome 10 or latter
+Download from Chrome Web Store
+---
 
-Credits
-----------------
-Icons from original [Jenkins](http://jenkins-ci.org/).
+[Pronama-chan Jenkins Notifier for Chrome(TM)](https://chrome.google.com/webstore/detail/pronama-chan-jenkins-noti/ehiondhbchehdabfefjcbnkfinflnlmg?hl=ja)
 
- * images/icon.png
- * images/blue.png
- * images/yellow.png
- * images/red.png
- * images/grey.png
 
-License (without icons)
+License (without icons and sounds)
 ------------------------------
 The MIT License (MIT)
 Copyright (c) 2011 mallowlabs
